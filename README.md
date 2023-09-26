@@ -28,7 +28,7 @@ Before you begin, ensure you have Flutter installed on your machine. If you have
 1. Clone the Finance Pal repository to your local machine using the following command:
 
    ```shell
-   git clone https://github.com/your-username/finance-pal.git
+   git clone https://github.com/kodedbykenzie/finance-pal.git
    
 2. Install the project dependencies using Flutter:
 
