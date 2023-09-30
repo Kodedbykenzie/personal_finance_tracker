@@ -3,31 +3,44 @@ import 'package:lottie/lottie.dart';
 import 'package:personal_finance_tracker/home_screen.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: LoginPage(),
   ));
 }
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+//TODO add a way to go back to signup page
   String _firstNameError = '';
   String _lastNameError = '';
   String _usernameError = '';
   String _phoneNumberError = '';
   String _emailError = '';
   String _passwordError = '';
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _usernameController.dispose();
+    _phoneNumberController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   void _login() {
     final firstName = _firstNameController.text.trim();
@@ -106,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
         _passwordError.isEmpty) {
       // After successful login, navigate to the HomePage
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => HomePage()),
+        MaterialPageRoute(builder: (_) => const HomePage()),
       );
     }
   }
@@ -115,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Center(
         child: Padding(
@@ -131,13 +144,14 @@ class _LoginPageState extends State<LoginPage> {
                     'assets/animation_lml0c7oz.json', // Replace with your animation file path
                     width: 200,
                     height: 200,
-                    repeat: true, // Set to true if you want the animation to loop
+                    repeat:
+                        true, // Set to true if you want the animation to loop
                   ),
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      icon: Icon(Icons.email),
+                      icon: const Icon(Icons.email),
                       errorText: _emailError,
                     ),
                     keyboardType: TextInputType.emailAddress,
@@ -146,15 +160,15 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _passwordController,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      icon: Icon(Icons.lock),
+                      icon: const Icon(Icons.lock),
                       errorText: _passwordError,
                     ),
                     obscureText: true,
                   ),
-                  SizedBox(height: 32.0),
+                  const SizedBox(height: 32.0),
                   ElevatedButton(
                     onPressed: _login,
-                    child: Text('Login'),
+                    child: const Text('Login'),
                   ),
                 ],
               ),
@@ -165,7 +179,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-
-
-

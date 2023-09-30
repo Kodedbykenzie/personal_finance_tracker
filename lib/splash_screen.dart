@@ -3,8 +3,10 @@ import 'package:lottie/lottie.dart';
 import 'package:personal_finance_tracker/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -15,11 +17,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToOnboarding() async {
-    await Future.delayed(Duration(seconds: 3)); // Splash screen duration
+    await Future.delayed(const Duration(seconds: 3)); // Splash screen duration
 
     // Navigate to the onboarding screen
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => OnboardingScreen()),
+      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
     );
   }
 
@@ -36,8 +38,8 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 200,
               height: 200,
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Finance Pal',
               style: TextStyle(
                 color: Colors.white,
