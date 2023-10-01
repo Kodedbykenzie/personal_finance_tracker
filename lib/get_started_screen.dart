@@ -33,10 +33,11 @@ class GetStartedScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navigate to the signup screen
-                Navigator.of(context).pushReplacement(
+                Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                       builder: (_) =>
                           const SignUpPage()), // Replace `SignUpScreen` with the actual name of your signup screen
+                  (route) => false,
                 );
               },
               child: const Text('Sign Up'),
