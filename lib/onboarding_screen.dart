@@ -5,8 +5,10 @@ import 'package:lottie/lottie.dart';
 import 'package:personal_finance_tracker/get_started_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
   @override
-  _OnboardingScreenState createState() => _OnboardingScreenState();
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
@@ -19,14 +21,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         height: 300,
       ),
       description:
-      "Your personal finance tracker.\n\nTake control of your finances with ease and confidence, empowering you to achieve your financial goals",
+          "Your personal finance tracker.\n\nTake control of your finances with ease and confidence, empowering you to achieve your financial goals",
       backgroundColor: Colors.white, // White background
-      styleTitle: TextStyle(
+      styleTitle: const TextStyle(
         color: Colors.blue, // Blue text color
         fontSize: 20,
         fontWeight: FontWeight.bold,
       ),
-      styleDescription: TextStyle(
+      styleDescription: const TextStyle(
         color: Colors.blue, // Black text color for content
         fontSize: 20,
         fontWeight: FontWeight.bold,
@@ -40,14 +42,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         height: 280,
       ),
       description:
-      "Easily track how much you're spending each day, week, or month.\n\nSet budget limits and receive alerts when you exceed them.",
+          "Easily track how much you're spending each day, week, or month.\n\nSet budget limits and receive alerts when you exceed them.",
       backgroundColor: Colors.blue, // Blue background
-      styleDescription: TextStyle(
+      styleDescription: const TextStyle(
         color: Colors.white, // White text color
         fontSize: 20,
         fontWeight: FontWeight.bold,
       ),
-      styleTitle: TextStyle(
+      styleTitle: const TextStyle(
         color: Colors.white, // White text color for content
         fontSize: 18,
       ),
@@ -60,14 +62,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         height: 300,
       ),
       description:
-      "Set budget limits and receive alerts when you exceed them.\n\nEasily set budget to spend each day, week, or month.",
+          "Set budget limits and receive alerts when you exceed them.\n\nEasily set budget to spend each day, week, or month.",
       backgroundColor: Colors.white, // White background
-      styleDescription: TextStyle(
+      styleDescription: const TextStyle(
         color: Colors.blue, // White text color
         fontSize: 20,
         fontWeight: FontWeight.bold,
       ),
-      styleTitle: TextStyle(
+      styleTitle: const TextStyle(
         color: Colors.white, // White text color for content
         fontSize: 18,
       ),
@@ -81,12 +83,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   void initState() {
     super.initState();
     // Automatically transition to the next slide every 2 seconds
-    Timer.periodic(Duration(seconds: 2), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 2), (Timer timer) {
       if (currentIndex < slides.length - 1) {
         currentIndex++;
         _pageController.animateToPage(
           currentIndex,
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
         );
       } else {
@@ -99,11 +101,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _navigateToGetStarted() async {
     // Delay the navigation to give time for the user to view the slides
-    await Future.delayed(Duration(seconds: 3)); // Adjust the duration as needed
+    await Future.delayed(
+        const Duration(seconds: 3)); // Adjust the duration as needed
 
     // Navigate to the "Get Started" screen
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => GetStartedScreen()),
+      MaterialPageRoute(builder: (_) => const GetStartedScreen()),
     );
   }
 
@@ -140,11 +143,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             currentIndex--;
                             _pageController.animateToPage(
                               currentIndex,
-                              duration: Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 500),
                               curve: Curves.easeInOut,
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             "",
                             style: TextStyle(
                               color: Colors.blue, // Customize link color
@@ -164,5 +167,3 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 }
-
-

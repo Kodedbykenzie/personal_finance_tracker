@@ -1,113 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:personal_finance_tracker/home_screen.dart';
-
-void main() {
-  runApp(MaterialApp(
-    home: LoginPage(),
-  ));
-}
+import 'package:personal_finance_tracker/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
 
-  String _firstNameError = '';
-  String _lastNameError = '';
-  String _usernameError = '';
-  String _phoneNumberError = '';
-  String _emailError = '';
-  String _passwordError = '';
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+//Use this credentials for login
+  String __email = '';
+  String _password = '';
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   void _login() {
-    final firstName = _firstNameController.text.trim();
-    final lastName = _lastNameController.text.trim();
-    final username = _usernameController.text.trim();
-    final phoneNumber = _phoneNumberController.text.trim();
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-
-    // Perform validation for each field
-    if (firstName.isEmpty) {
-      setState(() {
-        _firstNameError = 'Please enter your first name';
-      });
-    } else {
-      setState(() {
-        _firstNameError = '';
-      });
-    }
-
-    if (lastName.isEmpty) {
-      setState(() {
-        _lastNameError = 'Please enter your last name';
-      });
-    } else {
-      setState(() {
-        _lastNameError = '';
-      });
-    }
-
-    if (username.isEmpty) {
-      setState(() {
-        _usernameError = 'Please enter a username';
-      });
-    } else {
-      setState(() {
-        _usernameError = '';
-      });
-    }
-
-    if (phoneNumber.isEmpty) {
-      setState(() {
-        _phoneNumberError = 'Please enter your phone number';
-      });
-    } else {
-      setState(() {
-        _phoneNumberError = '';
-      });
-    }
-
-    if (email.isEmpty || !email.contains('@')) {
-      setState(() {
-        _emailError = 'Please enter a valid email address';
-      });
-    } else {
-      setState(() {
-        _emailError = '';
-      });
-    }
-
-    if (password.isEmpty || password.length < 6) {
-      setState(() {
-        _passwordError = 'Password must be at least 6 characters';
-      });
-    } else {
-      setState(() {
-        _passwordError = '';
-      });
-    }
-
-    if (_firstNameError.isEmpty &&
-        _lastNameError.isEmpty &&
-        _usernameError.isEmpty &&
-        _phoneNumberError.isEmpty &&
-        _emailError.isEmpty &&
-        _passwordError.isEmpty) {
-      // After successful login, navigate to the HomePage
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => HomePage()),
-      );
+    if (_formKey.currentState!.validate()) {
+      // call onSave methods on each field
+      _formKey.currentState!.save();
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+        return const HomePage();
+      }), (route) => false);
     }
   }
 
@@ -115,13 +41,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -131,30 +58,63 @@ class _LoginPageState extends State<LoginPage> {
                     'assets/animation_lml0c7oz.json', // Replace with your animation file path
                     width: 200,
                     height: 200,
-                    repeat: true, // Set to true if you want the animation to loop
+                    repeat:
+                        true, // Set to true if you want the animation to loop
                   ),
                   TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Email',
                       icon: Icon(Icons.email),
-                      errorText: _emailError,
                     ),
+                    validator: (value) {
+                      if (value == null ||
+                          value.trim().isEmpty ||
+                          !value.contains('@')) {
+                        return "Please enter a valid email address";
+                      }
+                      return null;
+                    },
+                    onSaved: (newValue) {
+                      __email = _emailController.text.trim();
+                      _emailController.clear();
+                    },
                     keyboardType: TextInputType.emailAddress,
                   ),
                   TextFormField(
                     controller: _passwordController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Password',
                       icon: Icon(Icons.lock),
-                      errorText: _passwordError,
                     ),
                     obscureText: true,
+                    validator: (value) {
+                      if (value == null ||
+                          value.trim().isEmpty ||
+                          value.trim().length < 6) {
+                        return "Password must be at least 6 characters";
+                      }
+                      return null;
+                    },
+                    onSaved: (newValue) {
+                      _password = _passwordController.text.trim();
+                      _passwordController.clear();
+                    },
                   ),
-                  SizedBox(height: 32.0),
+                  const SizedBox(height: 32.0),
                   ElevatedButton(
                     onPressed: _login,
-                    child: Text('Login'),
+                    child: const Text('Login'),
+                  ),
+                  const SizedBox(height: 32.0),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const SignUpPage();
+                      }), (route) => false);
+                    },
+                    child: const Text('Sign up'),
                   ),
                 ],
               ),
@@ -165,7 +125,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-
-
-
